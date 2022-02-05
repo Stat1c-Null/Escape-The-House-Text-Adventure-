@@ -147,7 +147,8 @@ def living_room_moves(player_input):
   elif (player_input == "right" or player_input == "basement door") and living_room.keys["basement door"] == "locked":
     print("\n--------\nYou attempt to open basement door, but it won't budge. Try looking around the house for something to open it with. Maybe there is a knife or lockpick somewhere")
   elif (player_input == "right" or player_input == "basement door") and living_room.keys["basement door"] == "open":
-    print("\n--------\nYou walk into basement")
+    print("\n--------\nYou walk into basement and a nasty rotting smell instantly hits your nose. It's impossibly hard to stay in this place, but you have to get through it, because there might be useful things in this basement. The basement looks old and run down, but there are still doors dividing rooms.")
+    room_description = "\n--------\nThe basement looks old and run down, but there are still doors dividing rooms. There is a lot of tools throwed around everywhere, rolls of duct tape on the floor, dirty walls everywhere. The rotten smell is very strong down here. There is an old door leading forward right off the stairs. There is a new door to the left of the stairs. And there is another small old door to the left of the stairs. "
   elif player_input == "back":
     print("\n--------\nYou went back to the dinning room")
     next_room("start_room", start_room_description, start_room, start_room_text)
@@ -184,8 +185,8 @@ def living_room_actions(player_input):
 
 #Basement Room Start ----------------------------------------------------------------------
 basement_room_keys = {"phone" : "off"}
-basement_room = Location(("forward", "right", "left", "back"), ("fix phoneline","use computer", "grab shotgun"), basement_room_keys)
-basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n fix phoneline, use computer, grab shotgun\n"
+basement_room = Location(("forward", "right", "left", "back"), ("find phoneline", "use computer", "grab shotgun"), basement_room_keys)
+basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n \n"
 
 def basement_room_moves_actions(player_input):
   if player_input in basement_room.moves:
@@ -197,10 +198,19 @@ def basement_room_moves_actions(player_input):
     play_game()
 
 def basement_room_moves(player_input):
-  pass
+  if player_input == "forward":
+    print("\n--------\nYou open the door in front of you, and turn on the light switch. Inside the room, there are tables and toolboxes standing by every wall and every corner of the room. They are filled with all types of instrumets, tools, ropes, knifes, and even a few guns. Right in the middle of the room the was a table with just a shotgun and bullets on it.")
+    basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n grab shotgun \n"
+  elif player_input == "left":
+    print("\n--------\nYou open the door on the left, and all of a sudden the rotten smell got like 10 times more worse. As you open the door, and light shines on the floor, you can already see big puddles of blood on the floor. As you turn on the switch and old light bulb lights up the room, and you can see stacks of rotten, bloody, naked bodies stacked up on top of each other in the pit. Some of the bodies are fresh, and some are been here for a very long time. You can't stand this horryfing sight for any longer, so you puke on the floor right before closing the door ones and forever. ")
+  elif player_input == "right":
+    print("\n--------\nYou open the newest door to the right, and for some reason you dont smell anything bad in this room. You walk in and close the door. The room looks like an old office, with computer table and phone, book shelves, warddrobe, and a stack of wires that are leading from computer and the phone on the table, to the back side of the room")
+    basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n use computer, follow wires, use phone \n"
+
 
 def basement_room_actions(player_input):
-  pass
+  if player_input == "use computer":
+    print("\n--------\nYou press on the keyboard, and monitor lights on and shows a full body picture of you taken with a hidden camera. Have this guy been stalking you ? How many photos does he have ? You kept scrolling, but new photos kept on coming up. There was a picture of your house, your car, you on a sunday walk with your family, and a few face shots. You closed the photos and looked into a folder that was dated with your name. There was other pictures and also a text file named 'info', that you decided to open. \n NAME: " + name + "\nAGE: 29\nOCCUPATION: BUSINESSPERSON\n")
 #Basement Room End ---------------------------------------------------------------------------
 #Inventory Actions
 def InventoryActions(player_input):
