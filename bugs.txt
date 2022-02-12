@@ -1,0 +1,1 @@
+#1 Entering basement rooms should add unique actions after each room, not all actions at the same time

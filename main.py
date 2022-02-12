@@ -149,6 +149,8 @@ def living_room_moves(player_input):
   elif (player_input == "right" or player_input == "basement door") and living_room.keys["basement door"] == "open":
     print("\n--------\nYou walk into basement and a nasty rotting smell instantly hits your nose. It's impossibly hard to stay in this place, but you have to get through it, because there might be useful things in this basement. The basement looks old and run down, but there are still doors dividing rooms.")
     room_description = "\n--------\nThe basement looks old and run down, but there are still doors dividing rooms. There is a lot of tools throwed around everywhere, rolls of duct tape on the floor, dirty walls everywhere. The rotten smell is very strong down here. There is an old door leading forward right off the stairs. There is a new door to the left of the stairs. And there is another small old door to the left of the stairs. "
+    #SWITCH ROOMS
+    next_room("basement_room", room_description, basement_room, basement_room_text)
   elif player_input == "back":
     print("\n--------\nYou went back to the dinning room")
     next_room("start_room", start_room_description, start_room, start_room_text)
@@ -200,17 +202,40 @@ def basement_room_moves_actions(player_input):
 def basement_room_moves(player_input):
   if player_input == "forward":
     print("\n--------\nYou open the door in front of you, and turn on the light switch. Inside the room, there are tables and toolboxes standing by every wall and every corner of the room. They are filled with all types of instrumets, tools, ropes, knifes, and even a few guns. Right in the middle of the room the was a table with just a shotgun and bullets on it.")
-    basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n grab shotgun \n"
+    basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n use computer, follow wires, use phone, grab shotgun \n"
   elif player_input == "left":
     print("\n--------\nYou open the door on the left, and all of a sudden the rotten smell got like 10 times more worse. As you open the door, and light shines on the floor, you can already see big puddles of blood on the floor. As you turn on the switch and old light bulb lights up the room, and you can see stacks of rotten, bloody, naked bodies stacked up on top of each other in the pit. Some of the bodies are fresh, and some are been here for a very long time. You can't stand this horryfing sight for any longer, so you puke on the floor right before closing the door ones and forever. ")
   elif player_input == "right":
     print("\n--------\nYou open the newest door to the right, and for some reason you dont smell anything bad in this room. You walk in and close the door. The room looks like an old office, with computer table and phone, book shelves, warddrobe, and a stack of wires that are leading from computer and the phone on the table, to the back side of the room")
-    basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n use computer, follow wires, use phone \n"
+    basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n use computer, follow wires, use phone, grab shotgun \n"
 
 
 def basement_room_actions(player_input):
+  global ShotgunAmmo
+  failed = False
   if player_input == "use computer":
-    print("\n--------\nYou press on the keyboard, and monitor lights on and shows a full body picture of you taken with a hidden camera. Have this guy been stalking you ? How many photos does he have ? You kept scrolling, but new photos kept on coming up. There was a picture of your house, your car, you on a sunday walk with your family, and a few face shots. You closed the photos and looked into a folder that was dated with your name. There was other pictures and also a text file named 'info', that you decided to open. \n NAME: " + name + "\nAGE: 29\nOCCUPATION: BUSINESSPERSON\n")
+    print("\n--------\nYou press on the keyboard, and monitor lights on and shows a full body picture of you taken with a hidden camera. Have this guy been stalking you ? How many photos does he have ? You kept scrolling, but new photos kept on coming up. There was a picture of your house, your car, you on a sunday walk with your family, and a few face shots. You closed the photos and looked into a folder that was dated with your name. There was other pictures and also a text file named 'info', that you decided to open. \n NAME: " + name + "\nAGE: 29\nOCCUPATION: BUSINESS PERSON\nPOSSIBLE GAIN: KIDNAP AND RANSOM\nDESCRIPTION: ")
+  elif player_input == "use phone":
+    print("\n--------\nYou pick up the phone, but you can't hear any noise in it. You look down and you see the wires going from the phone into the depth of this room. You cant see where wires are connected because it's behind the wall. ")
+  elif player_input == "grab shotgun":
+    print("\n--------\nYou take stirdy shotgun in your hands and weight it. It feels cold and looks shiny.")
+    inventory.append("shotgun")
+  elif player_input == "grab ammo":
+    print("\n--------\nYou look around the table where the shotgun was, and find 2 shotgun shells. You load one into the shotgun for practice")
+    ShotgunAmmo += 2
+  elif player_input == "follow wires" and failed == False:
+    print("\n--------\nYou follow the stack of red, green, white wires to the back of the basement, and you find yourself standing next to powergenerator. This generator is supplying the entire house with power, and under the section where it says phone line, the plug is taken out. This must be why the phone won't work! But you can see 3 different wires that could potentially work for the phone line. Green, white and red. Which one of the wires is the correct one ?")
+    wire = input("Enter color of the correct wire (green, white, red): ")
+    if wire == "green":
+      print("As soon as you insert the green plug inside, the entire generator starts sparking and burning, and starts making really bad sounds. You run away and hide behind the wall just in time, because generator explodes behind your back. ")
+      failed = True
+    elif wire == "red":
+      print("As soon as you insert red plug inside, it shocks you with volts and you scream and drop the plug on the ground.")
+      player_data["health"] -= 40
+    elif wire == "white":
+      print("Good phone works")
+
+    
 #Basement Room End ---------------------------------------------------------------------------
 #Inventory Actions
 def InventoryActions(player_input):
