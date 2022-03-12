@@ -19,6 +19,11 @@ ShotgunAmmo = 1
 room_description = ""
 room_text = ""
 current_room = ""
+forward = False
+right = False
+left = True
+
+
 #Move between rooms
 def next_room(name, description, room_object, moves_text):
   global player_data, current_room, room_text
@@ -186,9 +191,12 @@ def living_room_actions(player_input):
 #Living Room End ------------------------------------------------------------------------------
 
 #Basement Room Start ----------------------------------------------------------------------
-basement_room_keys = {"phone" : "off"}
+basement_room_keys = {"phone" : "off", "shotgun" : "off", "ammo" : "off"}
 basement_room = Location(("forward", "right", "left", "back"), ("find phoneline", "use computer", "grab shotgun"), basement_room_keys)
 basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n \n"
+  
+if right == True:
+  basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n use computer, find phoneline \n"
 
 def basement_room_moves_actions(player_input):
   if player_input in basement_room.moves:
@@ -200,14 +208,13 @@ def basement_room_moves_actions(player_input):
     play_game()
 
 def basement_room_moves(player_input):
+  global forward, right, left
   if player_input == "forward":
     print("\n--------\nYou open the door in front of you, and turn on the light switch. Inside the room, there are tables and toolboxes standing by every wall and every corner of the room. They are filled with all types of instrumets, tools, ropes, knifes, and even a few guns. Right in the middle of the room the was a table with just a shotgun and bullets on it.")
-    basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n use computer, follow wires, use phone, grab shotgun \n"
   elif player_input == "left":
     print("\n--------\nYou open the door on the left, and all of a sudden the rotten smell got like 10 times more worse. As you open the door, and light shines on the floor, you can already see big puddles of blood on the floor. As you turn on the switch and old light bulb lights up the room, and you can see stacks of rotten, bloody, naked bodies stacked up on top of each other in the pit. Some of the bodies are fresh, and some are been here for a very long time. You can't stand this horryfing sight for any longer, so you puke on the floor right before closing the door ones and forever. ")
   elif player_input == "right":
     print("\n--------\nYou open the newest door to the right, and for some reason you dont smell anything bad in this room. You walk in and close the door. The room looks like an old office, with computer table and phone, book shelves, warddrobe, and a stack of wires that are leading from computer and the phone on the table, to the back side of the room")
-    basement_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n use computer, follow wires, use phone, grab shotgun \n"
 
 
 def basement_room_actions(player_input):
@@ -237,6 +244,35 @@ def basement_room_actions(player_input):
 
     
 #Basement Room End ---------------------------------------------------------------------------
+
+#Basement Gun Room-----------------------------------------------------
+basement_gun_room_text = Fore.LIGHTMAGENTA_EX + "\nCurrent Room: Basement Room\n" + Fore.BLUE + "\nMoves: \n forward, right, left, back \nActions:\n grab shotgun, grab ammo, grab hunt knife \n"
+basement_gun_room_keys = {'grab shotgun': 'off', 'grab ammo': 'off', 'grab hunt knife':'off'}
+basement_gun_room = Location(("back"), ("grab shotgun", "grab ammo", "grab hunt knife"), basement_gun_room_keys)
+
+def basement_gun_room_moves_actions(player_input):
+  if player_input in basement_gun_room.moves:
+    basement_gun_room_moves(player_input)
+  elif player_input in basement_gun_room.actions:
+    basement_gun_room_actions(player_input)
+  else:
+    print("Invalid Move")
+    play_game()
+
+def basement_gun_room_moves(player_input):
+  if player_input == "back":
+    print('You walked out')
+def basement_gun_room_actions(player_input):
+  if player_input == "grab shotgun":
+    print("You pick up stirdy heavy pump action shotgun. You move your finger across the cold steel. You feel more protected with every second of you holding the gun.")
+    inventory.append('shotgun')
+  if player_input == "grab ammo":
+    print("You picked up a box of red shotgun shells off the table. The box wasn't full and you only found 4 shells in there")
+    inventory.append('4 shells')
+  if player_input == "grab hunt knife":
+    print("You picked up a hunting knife off the table. There is still marks of blood on the knife's blade, so you wipe the knife with a handkerchief laying on the table")
+    inventory.append('hunt knife')
+#Basement Gun Room End ------------------------------------------------
 #Inventory Actions
 def InventoryActions(player_input):
   global player_data, ShotgunAmmo
